@@ -11,7 +11,7 @@
 
 namespace Xabbuh\XApi\Storage\Doctrine\Repository;
 
-use Xabbuh\XApi\Storage\Api\Mapping\MappedStatement;
+use XApi\Repository\Api\Mapping\MappedStatement;
 
 /**
  * {@link MappedStatement} repository interface definition.

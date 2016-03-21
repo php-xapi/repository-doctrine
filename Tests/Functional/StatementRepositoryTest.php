@@ -12,9 +12,9 @@
 namespace Xabbuh\XApi\Storage\Doctrine\Tests\Functional;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Xabbuh\XApi\Storage\Api\Test\Functional\StatementRepositoryTest as BaseStatementRepositoryTest;
 use Xabbuh\XApi\Storage\Doctrine\Repository\MappedStatementRepository;
 use Xabbuh\XApi\Storage\Doctrine\Repository\StatementRepository;
+use XApi\Repository\Api\Test\Functional\StatementRepositoryTest as BaseStatementRepositoryTest;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>

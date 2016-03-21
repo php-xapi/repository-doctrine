@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+* added compatibility for version 0.2 of `php-xapi/repository-api`
+
 0.1.0
 -----
 

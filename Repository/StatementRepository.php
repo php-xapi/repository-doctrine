@@ -11,8 +11,8 @@
 
 namespace Xabbuh\XApi\Storage\Doctrine\Repository;
 
-use Xabbuh\XApi\Storage\Api\StatementRepository as BaseStatementRepository;
-use Xabbuh\XApi\Storage\Api\Mapping\MappedStatement;
+use XApi\Repository\Api\StatementRepository as BaseStatementRepository;
+use XApi\Repository\Api\Mapping\MappedStatement;
 
 /**
  * Doctrine based {@link Statement} repository.

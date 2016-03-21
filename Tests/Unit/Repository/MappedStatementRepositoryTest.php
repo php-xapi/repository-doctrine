@@ -12,8 +12,8 @@
 namespace Xabbuh\XApi\Storage\Doctrine\Tests\Unit\Repository;
 
 use Xabbuh\XApi\DataFixtures\StatementFixtures;
-use Xabbuh\XApi\Storage\Api\Mapping\MappedStatement;
 use Xabbuh\XApi\Storage\Doctrine\Repository\MappedStatementRepository;
+use XApi\Repository\Api\Mapping\MappedStatement;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
