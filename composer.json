@@ -1,8 +1,8 @@
 {
-    "name": "xabbuh/xapi-doctrine-storage",
-    "description": "common classes for Doctrine based driver implementations of an xAPI storage",
+    "name": "php-xapi/repository-doctrine",
+    "description": "common classes for Doctrine based implementations of an xAPI repository",
     "keywords": ["xAPI", "Tin Can API", "Experience API", "storage", "database", "repository", "document", "Doctrine"],
-    "homepage": "https://github.com/php-xapi/xapi-doctrine-storage/",
+    "homepage": "https://github.com/php-xapi/repository-doctrine/",
     "license": "MIT",
     "authors": [
         {
@@ -12,11 +12,14 @@
     ],
     "require": {
         "doctrine/common": "~2.4",
-        "php-xapi/model": "~0.1",
-        "php-xapi/repository-api": "~0.1"
+        "php-xapi/model": "^0.1.0",
+        "php-xapi/repository-api": "^0.1.0"
     },
     "require-dev": {
-        "php-xapi/test-fixtures": "~0.1"
+        "php-xapi/test-fixtures": "^0.1.0"
+    },
+    "conflict": {
+        "xabbuh/xapi-doctrine-storage": "*"
     },
     "autoload": {
         "psr-4": {
@@ -25,7 +28,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.2.x-dev"
+            "dev-master": "0.1.x-dev"
         }
     }
 }
