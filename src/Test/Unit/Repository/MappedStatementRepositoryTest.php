@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace XApi\Repository\Doctrine\Tests\Unit\Repository;
+namespace XApi\Repository\Doctrine\Test\Unit\Repository;
 
 use Xabbuh\XApi\DataFixtures\StatementFixtures;
 use XApi\Repository\Api\Mapping\MappedStatement;

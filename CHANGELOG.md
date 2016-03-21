@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+0.2.1
+-----
+
+* fixed namespace for base unit test case class `MappedStatementRepositoryTest`
+
 0.2.0
 -----
 
