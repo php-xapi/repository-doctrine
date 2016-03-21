@@ -23,7 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "XApi\\Repository\\Doctrine\\": ""
+            "XApi\\Repository\\Doctrine\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "XApi\\Repository\\Doctrine\\Tests\\": "tests/"
         }
     },
     "extra": {
