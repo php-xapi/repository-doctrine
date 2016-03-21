@@ -4,6 +4,9 @@ CHANGELOG
 0.2.0
 -----
 
+* moved base functional `StatementRepositoryTest` test case class to the
+  `XApi\Repository\Doctrine\Test\Functional` namespace
+
 * changed base namespace of all classes from `Xabbuh\XApi\Storage\Doctrine` to
   `XApi\Repository\Doctrine`
 

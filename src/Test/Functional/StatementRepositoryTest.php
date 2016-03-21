@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace XApi\Repository\Doctrine\Tests\Functional;
+namespace XApi\Repository\Doctrine\Test\Functional;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use XApi\Repository\Api\Test\Functional\StatementRepositoryTest as BaseStatementRepositoryTest;
