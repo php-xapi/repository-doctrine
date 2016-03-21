@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Xabbuh\XApi\Storage\Doctrine\Tests\Functional;
+namespace XApi\Repository\Doctrine\Tests\Functional;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Xabbuh\XApi\Storage\Doctrine\Repository\MappedStatementRepository;
-use Xabbuh\XApi\Storage\Doctrine\Repository\StatementRepository;
 use XApi\Repository\Api\Test\Functional\StatementRepositoryTest as BaseStatementRepositoryTest;
+use XApi\Repository\Doctrine\Repository\MappedStatementRepository;
+use XApi\Repository\Doctrine\Repository\StatementRepository;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>

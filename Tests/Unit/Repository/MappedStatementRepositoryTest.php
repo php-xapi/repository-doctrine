@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Xabbuh\XApi\Storage\Doctrine\Tests\Unit\Repository;
+namespace XApi\Repository\Doctrine\Tests\Unit\Repository;
 
 use Xabbuh\XApi\DataFixtures\StatementFixtures;
-use Xabbuh\XApi\Storage\Doctrine\Repository\MappedStatementRepository;
 use XApi\Repository\Api\Mapping\MappedStatement;
+use XApi\Repository\Doctrine\Repository\MappedStatementRepository;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
@@ -54,7 +54,7 @@ abstract class MappedStatementRepositoryTest extends \PHPUnit_Framework_TestCase
             ->objectManager
             ->expects($this->once())
             ->method('persist')
-            ->with($this->isInstanceOf('\Xabbuh\XApi\Storage\Api\Mapping\MappedStatement'))
+            ->with($this->isInstanceOf('\XApi\Repository\Api\Mapping\MappedStatement'))
         ;
 
         $mappedStatement = MappedStatement::createFromModel(StatementFixtures::getMinimalStatement());

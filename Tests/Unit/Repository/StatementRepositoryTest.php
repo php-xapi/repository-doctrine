@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Xabbuh\XApi\Storage\Doctrine\Tests\Unit\Repository;
+namespace XApi\Repository\Doctrine\Tests\Unit\Repository;
 
 use Xabbuh\XApi\DataFixtures\StatementFixtures;
 use Xabbuh\XApi\DataFixtures\VerbFixtures;
 use Xabbuh\XApi\Model\StatementsFilter;
-use Xabbuh\XApi\Storage\Doctrine\Repository\StatementRepository;
 use XApi\Repository\Api\Mapping\MappedStatement;
+use XApi\Repository\Doctrine\Repository\StatementRepository;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
@@ -23,7 +23,7 @@ use XApi\Repository\Api\Mapping\MappedStatement;
 class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Xabbuh\XApi\Storage\Doctrine\Repository\MappedStatementRepository
+     * @var \PHPUnit_Framework_MockObject_MockObject|\XApi\Repository\Doctrine\Repository\MappedStatementRepository
      */
     private $mappedStatementRepository;
 
@@ -110,11 +110,11 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Xabbuh\XApi\Storage\Doctrine\Repository\MappedStatementRepository
+     * @return \PHPUnit_Framework_MockObject_MockObject|\XApi\Repository\Doctrine\Repository\MappedStatementRepository
      */
     protected function createMappedStatementRepositoryMock()
     {
-        return $this->getMock('\Xabbuh\XApi\Storage\Doctrine\Repository\MappedStatementRepository');
+        return $this->getMock('\XApi\Repository\Doctrine\Repository\MappedStatementRepository');
     }
 
     /**

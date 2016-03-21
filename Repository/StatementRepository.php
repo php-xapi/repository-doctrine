@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Xabbuh\XApi\Storage\Doctrine\Repository;
+namespace XApi\Repository\Doctrine\Repository;
 
 use XApi\Repository\Api\StatementRepository as BaseStatementRepository;
 use XApi\Repository\Api\Mapping\MappedStatement;
