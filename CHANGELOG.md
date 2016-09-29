@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+0.3.0
+-----
+
+* The requirements for `php-xapi/model` and `php-xapi/test-fixtures` have
+  been bumped to `^1.0` to make use of their stable releases.
+
+* The required version of the `php-xapi/repository-api` package has been
+  raised to `^0.3`.
+
 0.2.1
 -----
 

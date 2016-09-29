@@ -11,8 +11,10 @@
 
 namespace XApi\Repository\Doctrine\Tests\Unit\Repository;
 
+use Rhumsaa\Uuid\Uuid;
 use Xabbuh\XApi\DataFixtures\StatementFixtures;
 use Xabbuh\XApi\DataFixtures\VerbFixtures;
+use Xabbuh\XApi\Model\StatementId;
 use Xabbuh\XApi\Model\StatementsFilter;
 use XApi\Repository\Api\Mapping\MappedStatement;
 use XApi\Repository\Doctrine\Repository\StatementRepository;
@@ -40,12 +42,12 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testFindStatementById()
     {
-        $statementId = md5(uniqid());
+        $statementId = StatementId::fromUuid(Uuid::uuid4());
         $this
             ->mappedStatementRepository
             ->expects($this->once())
             ->method('findMappedStatement')
-            ->with(array('id' => $statementId))
+            ->with(array('id' => $statementId->getValue()))
             ->will($this->returnValue(MappedStatement::createFromModel(StatementFixtures::getMinimalStatement())));
 
         $this->statementRepository->findStatementById($statementId);
@@ -53,13 +55,13 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testFindStatementsByCriteria()
     {
-        $verb = VerbFixtures::getVerb();
+        $verb = VerbFixtures::getTypicalVerb();
 
         $this
             ->mappedStatementRepository
             ->expects($this->once())
             ->method('findMappedStatements')
-            ->with($this->equalTo(array('verb' => $verb->getId())))
+            ->with($this->equalTo(array('verb' => $verb->getId()->getValue())))
             ->will($this->returnValue(array()));
 
         $filter = new StatementsFilter();
