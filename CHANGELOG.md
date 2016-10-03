@@ -4,6 +4,13 @@ CHANGELOG
 0.3.0
 -----
 
+* The `MappedStatement` and `MappedVerb` classes have been removed from the
+  `php-xapi/model` package. They have been replaced with the new `Statement`
+  and `Verb` classes in the `XApi\Repository\Doctrine\Mapping` namespace of
+  this package. Consequently, the `MappedStatementRepository` class has been
+  removed. It was replaced with a new `StatementRepository` class in the
+  `XApi\Repository\Doctrine\Repository\Mapping` namespace.
+
 * The requirements for `php-xapi/model` and `php-xapi/test-fixtures` have
   been bumped to `^1.0` to make use of their stable releases.
 

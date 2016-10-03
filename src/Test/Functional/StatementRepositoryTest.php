@@ -13,7 +13,7 @@ namespace XApi\Repository\Doctrine\Test\Functional;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use XApi\Repository\Api\Test\Functional\StatementRepositoryTest as BaseStatementRepositoryTest;
-use XApi\Repository\Doctrine\Repository\MappedStatementRepository;
+use XApi\Repository\Doctrine\Repository\Mapping\StatementRepository as MappedStatementRepository;
 use XApi\Repository\Doctrine\Repository\StatementRepository;
 
 /**
@@ -46,7 +46,7 @@ abstract class StatementRepositoryTest extends BaseStatementRepositoryTest
 
     protected function cleanDatabase()
     {
-        foreach ($this->repository->findMappedStatements(array()) as $statement) {
+        foreach ($this->repository->findStatements(array()) as $statement) {
             $this->objectManager->remove($statement);
         }
 

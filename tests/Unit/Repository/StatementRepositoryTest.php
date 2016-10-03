@@ -16,7 +16,7 @@ use Xabbuh\XApi\DataFixtures\StatementFixtures;
 use Xabbuh\XApi\DataFixtures\VerbFixtures;
 use Xabbuh\XApi\Model\StatementId;
 use Xabbuh\XApi\Model\StatementsFilter;
-use XApi\Repository\Api\Mapping\MappedStatement;
+use XApi\Repository\Doctrine\Mapping\Statement as MappedStatement;
 use XApi\Repository\Doctrine\Repository\StatementRepository;
 
 /**
@@ -25,7 +25,7 @@ use XApi\Repository\Doctrine\Repository\StatementRepository;
 class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\XApi\Repository\Doctrine\Repository\MappedStatementRepository
+     * @var \PHPUnit_Framework_MockObject_MockObject|\XApi\Repository\Doctrine\Repository\Mapping\StatementRepository
      */
     private $mappedStatementRepository;
 
@@ -46,9 +46,9 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
         $this
             ->mappedStatementRepository
             ->expects($this->once())
-            ->method('findMappedStatement')
+            ->method('findStatement')
             ->with(array('id' => $statementId->getValue()))
-            ->will($this->returnValue(MappedStatement::createFromModel(StatementFixtures::getMinimalStatement())));
+            ->will($this->returnValue(MappedStatement::fromModel(StatementFixtures::getMinimalStatement())));
 
         $this->statementRepository->findStatementById($statementId);
     }
@@ -60,7 +60,7 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
         $this
             ->mappedStatementRepository
             ->expects($this->once())
-            ->method('findMappedStatements')
+            ->method('findStatements')
             ->with($this->equalTo(array('verb' => $verb->getId()->getValue())))
             ->will($this->returnValue(array()));
 
@@ -76,11 +76,11 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
         $this
             ->mappedStatementRepository
             ->expects($this->once())
-            ->method('storeMappedStatement')
+            ->method('storeStatement')
             ->with(
                 $this->callback(function (MappedStatement $mappedStatement) use ($self, $statement) {
                     return $self->assertMappedStatement(
-                        MappedStatement::createFromModel($statement),
+                        MappedStatement::fromModel($statement),
                         $mappedStatement
                     );
                 }),
@@ -97,11 +97,11 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
         $this
             ->mappedStatementRepository
             ->expects($this->once())
-            ->method('storeMappedStatement')
+            ->method('storeStatement')
             ->with(
                 $this->callback(function (MappedStatement $mappedStatement) use ($self, $statement) {
                     return $self->assertMappedStatement(
-                        MappedStatement::createFromModel($statement),
+                        MappedStatement::fromModel($statement),
                         $mappedStatement
                     );
                 }),
@@ -112,11 +112,11 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\XApi\Repository\Doctrine\Repository\MappedStatementRepository
+     * @return \PHPUnit_Framework_MockObject_MockObject|\XApi\Repository\Doctrine\Repository\Mapping\StatementRepository
      */
     protected function createMappedStatementRepositoryMock()
     {
-        return $this->getMock('\XApi\Repository\Doctrine\Repository\MappedStatementRepository');
+        return $this->getMock('\XApi\Repository\Doctrine\Repository\Mapping\StatementRepository');
     }
 
     /**

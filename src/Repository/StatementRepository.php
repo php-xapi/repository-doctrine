@@ -11,19 +11,23 @@
 
 namespace XApi\Repository\Doctrine\Repository;
 
-use XApi\Repository\Api\StatementRepository as BaseStatementRepository;
-use XApi\Repository\Api\Mapping\MappedStatement;
+use Rhumsaa\Uuid\Uuid;
+use Xabbuh\XApi\Common\Exception\NotFoundException;
+use Xabbuh\XApi\Model\Actor;
+use Xabbuh\XApi\Model\Statement;
+use Xabbuh\XApi\Model\StatementId;
+use Xabbuh\XApi\Model\StatementsFilter;
+use XApi\Repository\Api\StatementRepositoryInterface;
+use XApi\Repository\Doctrine\Mapping\Statement as MappedStatement;
+use XApi\Repository\Doctrine\Repository\Mapping\StatementRepository as MappedStatementRepository;
 
 /**
  * Doctrine based {@link Statement} repository.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class StatementRepository extends BaseStatementRepository
+final class StatementRepository implements StatementRepositoryInterface
 {
-    /**
-     * @var MappedStatementRepository The statement repository
-     */
     private $repository;
 
     public function __construct(MappedStatementRepository $repository)
@@ -32,26 +36,92 @@ class StatementRepository extends BaseStatementRepository
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    protected function findMappedStatement(array $criteria)
+    final public function findStatementById(StatementId $statementId, Actor $authority = null)
     {
-        return $this->repository->findMappedStatement($criteria);
+        $criteria = array('id' => $statementId->getValue());
+
+        if (null !== $authority) {
+            $criteria['authority'] = $authority;
+        }
+
+        $mappedStatement = $this->repository->findStatement($criteria);
+
+        if (null === $mappedStatement) {
+            throw new NotFoundException('No statements could be found matching the given criteria.');
+        }
+
+        $statement = $mappedStatement->getModel();
+
+        if ($statement->isVoidStatement()) {
+            throw new NotFoundException('The stored statement is a voiding statement.');
+        }
+
+        return $statement;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    protected function findMappedStatements(array $criteria)
+    final public function findVoidedStatementById(StatementId $voidedStatementId, Actor $authority = null)
     {
-        return $this->repository->findMappedStatements($criteria);
+        $criteria = array('id' => $voidedStatementId->getValue());
+
+        if (null !== $authority) {
+            $criteria['authority'] = $authority;
+        }
+
+        $mappedStatement = $this->repository->findStatement($criteria);
+
+        if (null === $mappedStatement) {
+            throw new NotFoundException('No voided statements could be found matching the given criteria.');
+        }
+
+        $statement = $mappedStatement->getModel();
+
+        if (!$statement->isVoidStatement()) {
+            throw new NotFoundException('The stored statement is no voiding statement.');
+        }
+
+        return $statement;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    protected function storeMappedStatement(MappedStatement $mappedStatement, $flush)
+    final public function findStatementsBy(StatementsFilter $criteria, Actor $authority = null)
     {
-        $this->repository->storeMappedStatement($mappedStatement, $flush);
+        $criteria = $criteria->getFilter();
+
+        if (null !== $authority) {
+            $criteria['authority'] = $authority;
+        }
+
+        $mappedStatements = $this->repository->findStatements($criteria);
+        $statements = array();
+
+        foreach ($mappedStatements as $mappedStatement) {
+            $statements[] = $mappedStatement->getModel();
+        }
+
+        return $statements;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    final public function storeStatement(Statement $statement, $flush = true)
+    {
+        if (null === $statement->getId()) {
+            $statement = $statement->withId(StatementId::fromUuid(Uuid::uuid4()));
+        }
+
+        $mappedStatement = MappedStatement::fromModel($statement);
+        $mappedStatement->stored = new \DateTime();
+
+        $this->repository->storeStatement($mappedStatement, $flush);
+
+        return $statement->getId();
     }
 }

@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace XApi\Repository\Doctrine\Test\Unit\Repository;
+namespace XApi\Repository\Doctrine\Test\Unit\Repository\Mapping;
 
 use Xabbuh\XApi\DataFixtures\StatementFixtures;
-use XApi\Repository\Api\Mapping\MappedStatement;
-use XApi\Repository\Doctrine\Repository\MappedStatementRepository;
+use XApi\Repository\Doctrine\Mapping\Statement;
+use XApi\Repository\Doctrine\Repository\Mapping\StatementRepository;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-abstract class MappedStatementRepositoryTest extends \PHPUnit_Framework_TestCase
+abstract class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -36,7 +36,7 @@ abstract class MappedStatementRepositoryTest extends \PHPUnit_Framework_TestCase
     private $classMetadata;
 
     /**
-     * @var MappedStatementRepository
+     * @var StatementRepository
      */
     private $repository;
 
@@ -54,11 +54,11 @@ abstract class MappedStatementRepositoryTest extends \PHPUnit_Framework_TestCase
             ->objectManager
             ->expects($this->once())
             ->method('persist')
-            ->with($this->isInstanceOf('\XApi\Repository\Api\Mapping\MappedStatement'))
+            ->with($this->isInstanceOf('\XApi\Repository\Doctrine\Mapping\Statement'))
         ;
 
-        $mappedStatement = MappedStatement::createFromModel(StatementFixtures::getMinimalStatement());
-        $this->repository->storeMappedStatement($mappedStatement, true);
+        $mappedStatement = Statement::fromModel(StatementFixtures::getMinimalStatement());
+        $this->repository->storeStatement($mappedStatement, true);
     }
 
     public function testFlushIsCalledByDefault()
@@ -69,8 +69,8 @@ abstract class MappedStatementRepositoryTest extends \PHPUnit_Framework_TestCase
             ->method('flush')
         ;
 
-        $mappedStatement = MappedStatement::createFromModel(StatementFixtures::getMinimalStatement());
-        $this->repository->storeMappedStatement($mappedStatement);
+        $mappedStatement = Statement::fromModel(StatementFixtures::getMinimalStatement());
+        $this->repository->storeStatement($mappedStatement);
     }
 
     public function testCallToFlushCanBeSuppressed()
@@ -81,8 +81,8 @@ abstract class MappedStatementRepositoryTest extends \PHPUnit_Framework_TestCase
             ->method('flush')
         ;
 
-        $mappedStatement = MappedStatement::createFromModel(StatementFixtures::getMinimalStatement());
-        $this->repository->storeMappedStatement($mappedStatement, false);
+        $mappedStatement = Statement::fromModel(StatementFixtures::getMinimalStatement());
+        $this->repository->storeStatement($mappedStatement, false);
     }
 
     abstract protected function getObjectManagerClass();
