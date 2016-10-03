@@ -15,6 +15,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use XApi\Repository\Api\Test\Functional\StatementRepositoryTest as BaseStatementRepositoryTest;
 use XApi\Repository\Doctrine\Repository\Mapping\StatementRepository as MappedStatementRepository;
 use XApi\Repository\Doctrine\Repository\StatementRepository;
+use XApi\Repository\Doctrine\Test\StatementRepository as FreshStatementRepository;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
@@ -41,7 +42,7 @@ abstract class StatementRepositoryTest extends BaseStatementRepositoryTest
 
     protected function createStatementRepository()
     {
-        return new StatementRepository($this->repository);
+        return new FreshStatementRepository(new StatementRepository($this->repository), $this->objectManager);
     }
 
     protected function cleanDatabase()
