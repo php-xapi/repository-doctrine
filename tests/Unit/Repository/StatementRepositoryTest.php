@@ -72,17 +72,17 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testSave()
     {
         $statement = StatementFixtures::getMinimalStatement();
-        $self = $this;
         $this
             ->mappedStatementRepository
             ->expects($this->once())
             ->method('storeStatement')
             ->with(
-                $this->callback(function (MappedStatement $mappedStatement) use ($self, $statement) {
-                    return $self->assertMappedStatement(
-                        MappedStatement::fromModel($statement),
-                        $mappedStatement
-                    );
+                $this->callback(function (MappedStatement $mappedStatement) use ($statement) {
+                    $expected = MappedStatement::fromModel($statement);
+                    $actual = clone $mappedStatement;
+                    $actual->stored = null;
+
+                    return $expected == $actual;
                 }),
                 true
             );
@@ -93,17 +93,17 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testSaveWithoutFlush()
     {
         $statement = StatementFixtures::getMinimalStatement();
-        $self = $this;
         $this
             ->mappedStatementRepository
             ->expects($this->once())
             ->method('storeStatement')
             ->with(
-                $this->callback(function (MappedStatement $mappedStatement) use ($self, $statement) {
-                    return $self->assertMappedStatement(
-                        MappedStatement::fromModel($statement),
-                        $mappedStatement
-                    );
+                $this->callback(function (MappedStatement $mappedStatement) use ($statement) {
+                    $expected = MappedStatement::fromModel($statement);
+                    $actual = clone $mappedStatement;
+                    $actual->stored = null;
+
+                    return $expected == $actual;
                 }),
                 false
             );
@@ -117,61 +117,5 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
     protected function createMappedStatementRepositoryMock()
     {
         return $this->getMock('\XApi\Repository\Doctrine\Repository\Mapping\StatementRepository');
-    }
-
-    /**
-     * Ths method is only public to support PHP 5.3.
-     */
-    public function assertMappedStatement(MappedStatement $expected, MappedStatement $actual)
-    {
-        if ($expected->id !== $actual->id) {
-            return false;
-        }
-
-        if (!$expected->actor->equals($actual->actor)) {
-            return false;
-        }
-
-        if (!$expected->verb->equals($actual->verb)) {
-            return false;
-        }
-
-        if (!$expected->object->equals($actual->object)) {
-            return false;
-        }
-
-        if (null === $expected->result && null !== $actual->result) {
-            return false;
-        }
-
-        if (null !== $expected->result && null === $actual->result) {
-            return false;
-        }
-
-        if (null !== $expected->result && !$expected->result->equals($actual->result)) {
-            return false;
-        }
-
-        if (null === $expected->authority && null !== $actual->authority) {
-            return false;
-        }
-
-        if (null !== $expected->authority && null === $actual->authority) {
-            return false;
-        }
-
-        if (null !== $expected->authority && !$expected->authority->equals($actual->authority)) {
-            return false;
-        }
-
-        if ($expected->created != $actual->created) {
-            return false;
-        }
-
-        if (null === $actual->stored) {
-            return false;
-        }
-
-        return true;
     }
 }

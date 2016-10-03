@@ -11,6 +11,8 @@
 
 namespace XApi\Repository\Doctrine\Mapping;
 
+use Xabbuh\XApi\Model\IRI;
+use Xabbuh\XApi\Model\LanguageMap;
 use Xabbuh\XApi\Model\Verb as VerbModel;
 
 /**
@@ -21,37 +23,41 @@ use Xabbuh\XApi\Model\Verb as VerbModel;
 class Verb
 {
     public $identifier;
+
+    /**
+     * @var string
+     */
     public $id;
+
+    /**
+     * @var array|null
+     */
     public $display;
 
     public function getModel()
     {
-        return new VerbModel($this->id, $this->display);
+        $display = null;
+
+        if (null !== $this->display) {
+            $display = LanguageMap::create($this->display);
+        }
+
+        return new VerbModel(IRI::fromString($this->id), $display);
     }
 
-    public function equals(Verb $verb)
+    public static function fromModel(VerbModel $model)
     {
-        if ($this->identifier !== $verb->identifier) {
-            return false;
+        $verb = new self();
+        $verb->id = $model->getId()->getValue();
+
+        if (null !== $display = $model->getDisplay()) {
+            $verb->display = array();
+
+            foreach ($display->languageTags() as $languageTag) {
+                $verb->display[$languageTag] = $display[$languageTag];
+            }
         }
 
-        if ($this->id !== $verb->id) {
-            return false;
-        }
-
-        if ($this->display !== $verb->display) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public static function fromModel(VerbModel $verb)
-    {
-        $mappedVerb = new self();
-        $mappedVerb->id = $verb->getId();
-        $mappedVerb->display = $verb->getDisplay();
-
-        return $mappedVerb;
+        return $verb;
     }
 }

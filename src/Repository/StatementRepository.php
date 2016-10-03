@@ -118,7 +118,7 @@ final class StatementRepository implements StatementRepositoryInterface
         }
 
         $mappedStatement = MappedStatement::fromModel($statement);
-        $mappedStatement->stored = new \DateTime();
+        $mappedStatement->stored = time();
 
         $this->repository->storeStatement($mappedStatement, $flush);
 

@@ -4,6 +4,8 @@ CHANGELOG
 0.3.0
 -----
 
+* Added mapping classes for all statement properties.
+
 * The `MappedStatement` and `MappedVerb` classes have been removed from the
   `php-xapi/model` package. They have been replaced with the new `Statement`
   and `Verb` classes in the `XApi\Repository\Doctrine\Mapping` namespace of

@@ -11,8 +11,6 @@
 
 namespace XApi\Repository\Doctrine\Mapping;
 
-use Xabbuh\XApi\Model\Actor;
-use Xabbuh\XApi\Model\Result;
 use Xabbuh\XApi\Model\Statement as StatementModel;
 use Xabbuh\XApi\Model\StatementId;
 
@@ -29,7 +27,7 @@ class Statement
     public $id;
 
     /**
-     * @var Actor
+     * @var Object
      */
     public $actor;
 
@@ -39,7 +37,7 @@ class Statement
     public $verb;
 
     /**
-     * @var \Xabbuh\XApi\Model\Object
+     * @var Object
      */
     public $object;
 
@@ -49,37 +47,123 @@ class Statement
     public $result;
 
     /**
-     * @var Actor
+     * @var Object
      */
     public $authority;
 
     /**
-     * @var \DateTime
+     * @var int
      */
     public $created;
 
     /**
-     * @var \DateTime
+     * @var int
      */
     public $stored;
 
-    public function getModel()
+    /**
+     * @var Context
+     */
+    public $context;
+
+    /**
+     * @var bool
+     */
+    public $hasAttachments;
+
+    /**
+     * @var Attachment[]|null
+     */
+    public $attachments;
+
+    public static function fromModel(StatementModel $model)
     {
-        return new StatementModel(StatementId::fromString($this->id), $this->actor, $this->verb->getModel(), $this->object, $this->result, $this->authority, $this->created, $this->stored);
+        $statement = new self();
+        $statement->id = $model->getId()->getValue();
+        $statement->actor = Object::fromModel($model->getActor());
+        $statement->verb = Verb::fromModel($model->getVerb());
+        $statement->object = Object::fromModel($model->getObject());
+
+        if (null !== $model->getTimestamp()) {
+            $statement->created = $model->getTimestamp()->getTimestamp();
+        }
+
+        if (null !== $result = $model->getResult()) {
+            $statement->result = Result::fromModel($result);
+        }
+
+        if (null !== $authority = $model->getAuthority()) {
+            $statement->authority = Object::fromModel($authority);
+        }
+
+        if (null !== $context = $model->getContext()) {
+            $statement->context = Context::fromModel($context);
+        }
+
+        if (null !== $attachments = $model->getAttachments()) {
+            $statement->hasAttachments = true;
+            $statement->attachments = array();
+
+            foreach ($attachments as $attachment) {
+                $mappedAttachment = Attachment::fromModel($attachment);
+                $mappedAttachment->statement = $statement;
+                $statement->attachments[] = $mappedAttachment;
+            }
+        } else {
+            $statement->hasAttachments = false;
+        }
+
+        return $statement;
     }
 
-    public static function fromModel(StatementModel $statement)
+    public function getModel()
     {
-        $mappedStatement = new self();
-        $mappedStatement->id = $statement->getId()->getValue();
-        $mappedStatement->actor = $statement->getActor();
-        $mappedStatement->verb = Verb::fromModel($statement->getVerb());
-        $mappedStatement->object = $statement->getObject();
-        $mappedStatement->result = $statement->getResult();
-        $mappedStatement->authority = $statement->getAuthority();
-        $mappedStatement->created = $statement->getCreated();
-        $mappedStatement->stored = $statement->getStored();
+        $result = null;
+        $authority = null;
+        $created = null;
+        $stored = null;
+        $context = null;
+        $attachments = null;
 
-        return $mappedStatement;
+        if (null !== $this->result) {
+            $result = $this->result->getModel();
+        }
+
+        if (null !== $this->authority) {
+            $authority = $this->authority->getModel();
+        }
+
+        if (null !== $this->created) {
+            $created = new \DateTime('@'.$this->created);
+        }
+
+        if (null !== $this->stored) {
+            $stored = new \DateTime('@'.$this->stored);
+        }
+
+        if (null !== $this->context) {
+            $context = $this->context->getModel();
+        }
+
+        if ($this->hasAttachments) {
+            $attachments = array();
+
+            foreach ($this->attachments as $attachment) {
+                $attachments[] = $attachment->getModel();
+            }
+        }
+
+        return new StatementModel(
+            StatementId::fromString($this->id),
+            $this->actor->getModel(),
+            $this->verb->getModel(),
+            $this->object->getModel(),
+            $result,
+            $authority,
+            $created,
+            $stored,
+            $context,
+            $attachments
+        );
     }
 }
