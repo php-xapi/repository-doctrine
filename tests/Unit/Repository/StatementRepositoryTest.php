@@ -11,11 +11,12 @@
 
 namespace XApi\Repository\Doctrine\Tests\Unit\Repository;
 
-use Rhumsaa\Uuid\Uuid;
+use Rhumsaa\Uuid\Uuid as RhumsaUuid;
 use Xabbuh\XApi\DataFixtures\StatementFixtures;
 use Xabbuh\XApi\DataFixtures\VerbFixtures;
 use Xabbuh\XApi\Model\StatementId;
 use Xabbuh\XApi\Model\StatementsFilter;
+use Xabbuh\XApi\Model\Uuid as ModelUuid;
 use XApi\Repository\Doctrine\Mapping\Statement as MappedStatement;
 use XApi\Repository\Doctrine\Repository\StatementRepository;
 
@@ -42,7 +43,12 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testFindStatementById()
     {
-        $statementId = StatementId::fromUuid(Uuid::uuid4());
+        if (class_exists('Xabbuh\XApi\Model\Uuid')) {
+            $statementId = StatementId::fromUuid(ModelUuid::uuid4());
+        } else {
+            $statementId = StatementId::fromUuid(RhumsaUuid::uuid4());
+        }
+
         $this
             ->mappedStatementRepository
             ->expects($this->once())

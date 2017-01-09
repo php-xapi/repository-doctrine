@@ -12,13 +12,14 @@
     ],
     "require": {
         "doctrine/common": "~2.4",
-        "php-xapi/model": "^1.0",
-        "php-xapi/repository-api": "^0.3",
+        "php-xapi/model": "^1.0 || ^2.0",
+        "php-xapi/repository-api": "^0.3 || ^0.4",
         "ramsey/uuid": "^2.9"
     },
     "require-dev": {
         "php-xapi/test-fixtures": "^1.0"
     },
+    "minimum-stability": "dev",
     "conflict": {
         "xabbuh/xapi-doctrine-storage": "*"
     },
@@ -34,7 +35,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.3.x-dev"
+            "dev-master": "0.4.x-dev"
         }
     }
 }
