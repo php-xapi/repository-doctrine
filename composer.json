@@ -14,7 +14,7 @@
         "doctrine/common": "~2.4",
         "php-xapi/model": "^1.0 || ^2.0",
         "php-xapi/repository-api": "^0.3 || ^0.4",
-        "ramsey/uuid": "^2.9"
+        "ramsey/uuid": "^2.9 || ^3.0"
     },
     "require-dev": {
         "php-xapi/test-fixtures": "^1.0"
