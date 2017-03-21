@@ -11,6 +11,7 @@
 
 namespace XApi\Repository\Doctrine\Tests\Unit\Repository;
 
+use PHPUnit\Framework\TestCase;
 use Rhumsaa\Uuid\Uuid as RhumsaUuid;
 use Xabbuh\XApi\DataFixtures\StatementFixtures;
 use Xabbuh\XApi\DataFixtures\VerbFixtures;
@@ -23,7 +24,7 @@ use XApi\Repository\Doctrine\Repository\StatementRepository;
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
+class StatementRepositoryTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|\XApi\Repository\Doctrine\Repository\Mapping\StatementRepository
@@ -122,6 +123,8 @@ class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMappedStatementRepositoryMock()
     {
-        return $this->getMock('\XApi\Repository\Doctrine\Repository\Mapping\StatementRepository');
+        return $this
+            ->getMockBuilder('\XApi\Repository\Doctrine\Repository\Mapping\StatementRepository')
+            ->getMock();
     }
 }
