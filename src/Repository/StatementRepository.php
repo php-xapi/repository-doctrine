@@ -11,12 +11,13 @@
 
 namespace XApi\Repository\Doctrine\Repository;
 
-use Rhumsaa\Uuid\Uuid;
+use Rhumsaa\Uuid\Uuid as RhumsaaUuid;
 use Xabbuh\XApi\Common\Exception\NotFoundException;
 use Xabbuh\XApi\Model\Actor;
 use Xabbuh\XApi\Model\Statement;
 use Xabbuh\XApi\Model\StatementId;
 use Xabbuh\XApi\Model\StatementsFilter;
+use Xabbuh\XApi\Model\Uuid as ModelUuid;
 use XApi\Repository\Api\StatementRepositoryInterface;
 use XApi\Repository\Doctrine\Mapping\Statement as MappedStatement;
 use XApi\Repository\Doctrine\Repository\Mapping\StatementRepository as MappedStatementRepository;
@@ -114,7 +115,13 @@ final class StatementRepository implements StatementRepositoryInterface
     final public function storeStatement(Statement $statement, $flush = true)
     {
         if (null === $statement->getId()) {
-            $statement = $statement->withId(StatementId::fromUuid(Uuid::uuid4()));
+            if (class_exists('Xabbuh\XApi\Model\Uuid')) {
+                $uuid = ModelUuid::uuid4();
+            } else {
+                $uuid = RhumsaaUuid::uuid4();
+            }
+
+            $statement = $statement->withId(StatementId::fromUuid($uuid));
         }
 
         $mappedStatement = MappedStatement::fromModel($statement);
