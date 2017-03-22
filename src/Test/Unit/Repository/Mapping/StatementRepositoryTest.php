@@ -11,6 +11,7 @@
 
 namespace XApi\Repository\Doctrine\Test\Unit\Repository\Mapping;
 
+use PHPUnit\Framework\TestCase;
 use Xabbuh\XApi\DataFixtures\StatementFixtures;
 use XApi\Repository\Doctrine\Mapping\Statement;
 use XApi\Repository\Doctrine\Repository\Mapping\StatementRepository;
@@ -18,7 +19,7 @@ use XApi\Repository\Doctrine\Repository\Mapping\StatementRepository;
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-abstract class StatementRepositoryTest extends \PHPUnit_Framework_TestCase
+abstract class StatementRepositoryTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
