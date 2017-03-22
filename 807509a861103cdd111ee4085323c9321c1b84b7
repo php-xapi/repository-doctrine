@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-03-22T08:37:13Z
+
+I wonder why the build did not fail given that php-xapi/repository-api#14 wasn't merged when the PR was opened. Did we miss to execute some tests?
