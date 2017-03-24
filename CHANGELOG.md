@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+master
+------
+
+* store and return statement's version
+
 0.4.0
 -----
 
