@@ -39,7 +39,7 @@ final class StatementRepository implements StatementRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    final public function findStatementById(StatementId $statementId, Actor $authority = null)
+    public function findStatementById(StatementId $statementId, Actor $authority = null)
     {
         $criteria = array('id' => $statementId->getValue());
 
@@ -65,7 +65,7 @@ final class StatementRepository implements StatementRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    final public function findVoidedStatementById(StatementId $voidedStatementId, Actor $authority = null)
+    public function findVoidedStatementById(StatementId $voidedStatementId, Actor $authority = null)
     {
         $criteria = array('id' => $voidedStatementId->getValue());
 
@@ -91,7 +91,7 @@ final class StatementRepository implements StatementRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    final public function findStatementsBy(StatementsFilter $criteria, Actor $authority = null)
+    public function findStatementsBy(StatementsFilter $criteria, Actor $authority = null)
     {
         $criteria = $criteria->getFilter();
 
@@ -112,7 +112,7 @@ final class StatementRepository implements StatementRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    final public function storeStatement(Statement $statement, $flush = true)
+    public function storeStatement(Statement $statement, $flush = true)
     {
         if (null === $statement->getId()) {
             if (class_exists('Xabbuh\XApi\Model\Uuid')) {
