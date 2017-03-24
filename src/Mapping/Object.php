@@ -13,7 +13,7 @@ namespace XApi\Repository\Doctrine\Mapping;
 
 use Xabbuh\XApi\Model\Account;
 use Xabbuh\XApi\Model\Activity;
-use Xabbuh\XApi\Model\Actor;
+use Xabbuh\XApi\Model\Actor as ActorModel;
 use Xabbuh\XApi\Model\Agent;
 use Xabbuh\XApi\Model\Definition;
 use Xabbuh\XApi\Model\Group;
@@ -181,7 +181,7 @@ class Object
 
     public static function fromModel(ObjectModel $model)
     {
-        if ($model instanceof Actor) {
+        if ($model instanceof ActorModel) {
             return self::fromActor($model);
         }
 
@@ -265,7 +265,7 @@ class Object
         return $object;
     }
 
-    private static function fromActor(Actor $model)
+    private static function fromActor(ActorModel $model)
     {
         $inverseFunctionalIdentifier = $model->getInverseFunctionalIdentifier();
 
