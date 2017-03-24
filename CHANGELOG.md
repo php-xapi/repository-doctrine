@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+master
+------
+
+* store statement's created and stored property as `\DateTime` instead of
+  `int` timestamp.
+
 0.4.0
 -----
 

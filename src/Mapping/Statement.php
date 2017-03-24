@@ -52,12 +52,12 @@ class Statement
     public $authority;
 
     /**
-     * @var int
+     * @var \DateTime|null
      */
     public $created;
 
     /**
-     * @var int
+     * @var \DateTime|null
      */
     public $stored;
 
@@ -84,8 +84,8 @@ class Statement
         $statement->verb = Verb::fromModel($model->getVerb());
         $statement->object = Object::fromModel($model->getObject());
 
-        if (null !== $model->getTimestamp()) {
-            $statement->created = $model->getTimestamp()->getTimestamp();
+        if (null !== $model->getCreated()) {
+            $statement->created = $model->getCreated();
         }
 
         if (null !== $result = $model->getResult()) {
@@ -134,11 +134,11 @@ class Statement
         }
 
         if (null !== $this->created) {
-            $created = new \DateTime('@'.$this->created);
+            $created = $this->created;
         }
 
         if (null !== $this->stored) {
-            $stored = new \DateTime('@'.$this->stored);
+            $stored = $this->stored;
         }
 
         if (null !== $this->context) {
