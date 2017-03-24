@@ -13,6 +13,7 @@ namespace XApi\Repository\Doctrine\Mapping;
 
 use Xabbuh\XApi\Model\Attachment as AttachmentModel;
 use Xabbuh\XApi\Model\IRI;
+use Xabbuh\XApi\Model\IRL;
 use Xabbuh\XApi\Model\LanguageMap;
 
 /**
@@ -64,6 +65,11 @@ class Attachment
      */
     public $fileUrl;
 
+    /**
+     * @var string|null
+     */
+    public $content;
+
     public static function fromModel(AttachmentModel $model)
     {
         $attachment = new self();
@@ -72,7 +78,8 @@ class Attachment
         $attachment->length = $model->getLength();
         $attachment->sha2 = $model->getSha2();
         $attachment->display = array();
-        $attachment->fileUrl = $model->getFileUrl();
+        $attachment->fileUrl = $model->getFileUrl()->getValue();
+        $attachment->content = $model->getContent();
 
         $display = $model->getDisplay();
 
@@ -97,11 +104,16 @@ class Attachment
     public function getModel()
     {
         $description = null;
+        $fileUrl = null;
 
         if ($this->hasDescription) {
             $description = LanguageMap::create($this->description);
         }
 
-        return new AttachmentModel(IRI::fromString($this->usageType), $this->contentType, $this->length, $this->sha2, LanguageMap::create($this->display), $description, $this->fileUrl);
+        if (null !== $this->fileUrl) {
+            $fileUrl = IRL::fromString($this->fileUrl);
+        }
+
+        return new AttachmentModel(IRI::fromString($this->usageType), $this->contentType, $this->length, $this->sha2, LanguageMap::create($this->display), $description, $fileUrl, $this->content);
     }
 }
