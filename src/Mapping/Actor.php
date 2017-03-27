@@ -119,8 +119,8 @@ class Actor
             }
 
             return new Group($inverseFunctionalIdentifier, $this->name, $members);
-        } else {
-            return new Agent($inverseFunctionalIdentifier, $this->name);
         }
+
+        return new Agent($inverseFunctionalIdentifier, $this->name);
     }
 }
