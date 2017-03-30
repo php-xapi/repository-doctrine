@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace XApi\Repository\Doctrine\Repository\Mapping;
+namespace XApi\Repository\Doctrine\Storage;
 
 use XApi\Repository\Doctrine\Mapping\Object as MappedObject;
 
@@ -18,7 +18,7 @@ use XApi\Repository\Doctrine\Mapping\Object as MappedObject;
  *
  * @author Jérôme Parmentier <jerome.parmentier@acensi.fr>
  */
-interface ObjectRepository
+interface ObjectStorage
 {
     /**
      * @param array $criteria

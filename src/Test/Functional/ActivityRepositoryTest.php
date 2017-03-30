@@ -15,7 +15,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Xabbuh\XApi\Model\IRI;
 use XApi\Repository\Api\Test\Functional\ActivityRepositoryTest as BaseActivityRepositoryTest;
 use XApi\Repository\Doctrine\Repository\ActivityRepository;
-use XApi\Repository\Doctrine\Repository\Mapping\ObjectRepository as MappedObjectRepository;
+use XApi\Repository\Doctrine\Storage\ObjectStorage;
 use XApi\Repository\Doctrine\Test\ActivityRepository as FreshActivityRepository;
 
 /**
@@ -29,26 +29,26 @@ abstract class ActivityRepositoryTest extends BaseActivityRepositoryTest
     protected $objectManager;
 
     /**
-     * @var MappedObjectRepository
+     * @var ObjectStorage
      */
-    protected $repository;
+    protected $storage;
 
     protected function setUp()
     {
         $this->objectManager = $this->createObjectManager();
-        $this->repository = $this->createRepository();
+        $this->storage = $this->createStorage();
 
         parent::setUp();
     }
 
     protected function createActivityRepository()
     {
-        return new FreshActivityRepository(new ActivityRepository($this->repository), $this->objectManager);
+        return new FreshActivityRepository(new ActivityRepository($this->storage), $this->objectManager);
     }
 
     protected function cleanDatabase()
     {
-        $this->objectManager->remove($this->repository->findObject(
+        $this->objectManager->remove($this->storage->findObject(
             array(
                 'type' => 'activity',
                 'activityId' => IRI::fromString('http://tincanapi.com/conformancetest/activityid')->getValue(),
@@ -68,7 +68,7 @@ abstract class ActivityRepositoryTest extends BaseActivityRepositoryTest
      */
     abstract protected function getActivityClassName();
 
-    private function createRepository()
+    private function createStorage()
     {
         return $this->objectManager->getRepository($this->getActivityClassName());
     }

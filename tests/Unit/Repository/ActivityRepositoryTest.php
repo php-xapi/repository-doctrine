@@ -16,7 +16,7 @@ use Xabbuh\XApi\DataFixtures\ActivityFixtures;
 use Xabbuh\XApi\Model\IRI;
 use XApi\Repository\Doctrine\Mapping\Object as MappedObject;
 use XApi\Repository\Doctrine\Repository\ActivityRepository;
-use XApi\Repository\Doctrine\Repository\Mapping\ObjectRepository;
+use XApi\Repository\Doctrine\Storage\ObjectStorage;
 
 /**
  * @author Jérôme Parmentier <jerome.parmentier@acensi.fr>
@@ -24,7 +24,7 @@ use XApi\Repository\Doctrine\Repository\Mapping\ObjectRepository;
 class ActivityRepositoryTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ObjectRepository
+     * @var \PHPUnit_Framework_MockObject_MockObject|ObjectStorage
      */
     private $mappedStatementRepository;
 
@@ -35,11 +35,11 @@ class ActivityRepositoryTest extends TestCase
 
     protected function setUp()
     {
-        $this->mappedStatementRepository = $this->createMappedObjectRepositoryMock();
+        $this->mappedStatementRepository = $this->createObjectStorageMock();
         $this->activityRepository = new ActivityRepository($this->mappedStatementRepository);
     }
 
-    public function testFindStatementById()
+    public function testFindActivityById()
     {
         $activityId = IRI::fromString('http://tincanapi.com/conformancetest/activityid');
 
@@ -57,12 +57,12 @@ class ActivityRepositoryTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ObjectRepository
+     * @return \PHPUnit_Framework_MockObject_MockObject|ObjectStorage
      */
-    protected function createMappedObjectRepositoryMock()
+    protected function createObjectStorageMock()
     {
         return $this
-            ->getMockBuilder('\XApi\Repository\Doctrine\Repository\Mapping\ObjectRepository')
+            ->getMockBuilder('\XApi\Repository\Doctrine\Storage\ObjectStorage')
             ->getMock();
     }
 }
