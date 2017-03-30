@@ -20,6 +20,7 @@ use Xabbuh\XApi\Model\StatementsFilter;
 use Xabbuh\XApi\Model\Uuid as ModelUuid;
 use XApi\Repository\Doctrine\Mapping\Statement as MappedStatement;
 use XApi\Repository\Doctrine\Repository\StatementRepository;
+use XApi\Repository\Doctrine\Storage\StatementStorage;
 
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
@@ -27,7 +28,7 @@ use XApi\Repository\Doctrine\Repository\StatementRepository;
 class StatementRepositoryTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\XApi\Repository\Doctrine\Repository\Mapping\StatementRepository
+     * @var \PHPUnit_Framework_MockObject_MockObject|StatementStorage
      */
     private $mappedStatementRepository;
 
@@ -119,12 +120,12 @@ class StatementRepositoryTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\XApi\Repository\Doctrine\Repository\Mapping\StatementRepository
+     * @return \PHPUnit_Framework_MockObject_MockObject|StatementStorage
      */
     protected function createMappedStatementRepositoryMock()
     {
         return $this
-            ->getMockBuilder('\XApi\Repository\Doctrine\Repository\Mapping\StatementRepository')
+            ->getMockBuilder('\XApi\Repository\Doctrine\Storage\StatementStorage')
             ->getMock();
     }
 }
