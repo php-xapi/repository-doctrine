@@ -65,11 +65,6 @@ class Attachment
      */
     public $fileUrl;
 
-    /**
-     * @var string|null
-     */
-    public $content;
-
     public static function fromModel(AttachmentModel $model)
     {
         $attachment = new self();
@@ -79,7 +74,6 @@ class Attachment
         $attachment->sha2 = $model->getSha2();
         $attachment->display = array();
         $attachment->fileUrl = $model->getFileUrl()->getValue();
-        $attachment->content = $model->getContent();
 
         $display = $model->getDisplay();
 
@@ -114,6 +108,6 @@ class Attachment
             $fileUrl = IRL::fromString($this->fileUrl);
         }
 
-        return new AttachmentModel(IRI::fromString($this->usageType), $this->contentType, $this->length, $this->sha2, LanguageMap::create($this->display), $description, $fileUrl, $this->content);
+        return new AttachmentModel(IRI::fromString($this->usageType), $this->contentType, $this->length, $this->sha2, LanguageMap::create($this->display), $description, $fileUrl);
     }
 }
