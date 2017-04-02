@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-03-24T14:39:07Z
+
+I think we shouldn't store the binary content in the database. These data can become quite big. I think we should think about a binary storage abstraction layer in the LrsBundle if we don't want to just write the data on the disk.
+
+---------------------------------------------------------------------------
+
+by Lctrs at 2017-03-24T16:36:06Z
+
+> I think we shouldn't store the binary content in the database.
+
+Problem is that if fileUrl is `null`, it will throws an `Exception` during the instantiation of an `Attachment` model.
+
+---------------------------------------------------------------------------
+
+by Lctrs at 2017-03-31T10:23:42Z
+
+@xabbuh, I just deleted storing the attachments' content. It should be good to merge.
