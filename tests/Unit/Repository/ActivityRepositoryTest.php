@@ -13,6 +13,7 @@ namespace XApi\Repository\Doctrine\Tests\Unit\Repository;
 
 use PHPUnit\Framework\TestCase;
 use Xabbuh\XApi\DataFixtures\ActivityFixtures;
+use Xabbuh\XApi\DataFixtures\ActorFixtures;
 use Xabbuh\XApi\Model\IRI;
 use XApi\Repository\Doctrine\Mapping\Object as MappedObject;
 use XApi\Repository\Doctrine\Repository\ActivityRepository;
@@ -26,7 +27,7 @@ class ActivityRepositoryTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|ObjectStorage
      */
-    private $mappedStatementRepository;
+    private $objectStorage;
 
     /**
      * @var ActivityRepository
@@ -35,8 +36,8 @@ class ActivityRepositoryTest extends TestCase
 
     protected function setUp()
     {
-        $this->mappedStatementRepository = $this->createObjectStorageMock();
-        $this->activityRepository = new ActivityRepository($this->mappedStatementRepository);
+        $this->objectStorage = $this->createObjectStorageMock();
+        $this->activityRepository = new ActivityRepository($this->objectStorage);
     }
 
     public function testFindActivityById()
@@ -44,7 +45,7 @@ class ActivityRepositoryTest extends TestCase
         $activityId = IRI::fromString('http://tincanapi.com/conformancetest/activityid');
 
         $this
-            ->mappedStatementRepository
+            ->objectStorage
             ->expects($this->once())
             ->method('findObject')
             ->with(array(
@@ -52,6 +53,46 @@ class ActivityRepositoryTest extends TestCase
                 'activityId' => $activityId->getValue(),
             ))
             ->will($this->returnValue(MappedObject::fromModel(ActivityFixtures::getIdActivity())));
+
+        $this->activityRepository->findActivityById($activityId);
+    }
+
+    /**
+     * @expectedException \Xabbuh\XApi\Common\Exception\NotFoundException
+     */
+    public function testNotFoundObject()
+    {
+        $activityId = IRI::fromString('http://tincanapi.com/conformancetest/activityid');
+
+        $this
+            ->objectStorage
+            ->expects($this->once())
+            ->method('findObject')
+            ->with(array(
+                'type' => 'activity',
+                'activityId' => $activityId->getValue(),
+            ))
+            ->will($this->returnValue(null));
+
+        $this->activityRepository->findActivityById($activityId);
+    }
+
+    /**
+     * @expectedException \Xabbuh\XApi\Common\Exception\NotFoundException
+     */
+    public function testObjectIsNotAnActivity()
+    {
+        $activityId = IRI::fromString('http://tincanapi.com/conformancetest/activityid');
+
+        $this
+            ->objectStorage
+            ->expects($this->once())
+            ->method('findObject')
+            ->with(array(
+                'type' => 'activity',
+                'activityId' => $activityId->getValue(),
+            ))
+            ->will($this->returnValue(MappedObject::fromModel(ActorFixtures::getMboxAgent())));
 
         $this->activityRepository->findActivityById($activityId);
     }

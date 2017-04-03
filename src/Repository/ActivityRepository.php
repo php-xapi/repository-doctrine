@@ -12,6 +12,7 @@
 namespace XApi\Repository\Doctrine\Repository;
 
 use Xabbuh\XApi\Common\Exception\NotFoundException;
+use Xabbuh\XApi\Model\Activity;
 use Xabbuh\XApi\Model\IRI;
 use XApi\Repository\Api\ActivityRepositoryInterface;
 use XApi\Repository\Doctrine\Mapping\Object as MappedObject;
@@ -41,12 +42,18 @@ final class ActivityRepository implements ActivityRepositoryInterface
             'activityId' => $activityId->getValue(),
         );
 
-        $activity = $this->storage->findObject($criteria);
+        $mappedObject = $this->storage->findObject($criteria);
 
-        if (null === $activity) {
-            throw new NotFoundException('No activity could be found matching the given criteria.');
+        if (null === $mappedObject) {
+            throw new NotFoundException(sprintf('No activity could be found matching the ID "%s".', $activityId->getValue()));
         }
 
-        return $activity->getModel();
+        $activity = $mappedObject->getModel();
+
+        if (!$activity instanceof Activity) {
+            throw new NotFoundException(sprintf('No activity could be found matching the ID "%s".', $activityId->getValue()));
+        }
+
+        return $activity;
     }
 }
