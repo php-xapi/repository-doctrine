@@ -1,16 +1,12 @@
 CHANGELOG
 =========
 
-master
-------
-
-* store and return statement's version
-
 0.4.0
 -----
 
 * made the package compatible with `3.x` releases of `ramsey/uuid`
 * allow `2.x` releases of the `php-xapi/model` package too
+* store and return statement's version
 
 0.3.0
 -----
