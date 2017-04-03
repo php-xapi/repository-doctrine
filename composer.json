@@ -10,16 +10,10 @@
             "homepage": "https://github.com/xabbuh"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/Lctrs/repository-api"
-        }
-    ],
     "require": {
         "doctrine/common": "~2.4",
         "php-xapi/model": "^1.1 || ^2.0",
-        "php-xapi/repository-api": "dev-feature/activity-repository",
+        "php-xapi/repository-api": "^0.4.0",
         "ramsey/uuid": "^2.9 || ^3.0"
     },
     "require-dev": {
