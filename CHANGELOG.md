@@ -1,17 +1,14 @@
 CHANGELOG
 =========
 
-master
-------
-
-* store statement's created and stored property as `\DateTime` instead of
-  `int` timestamp.
-
 0.4.0
 -----
 
 * made the package compatible with `3.x` releases of `ramsey/uuid`
 * allow `2.x` releases of the `php-xapi/model` package too
+* the created and stored properties of the internal mapping `Statement` class
+  are now instances of PHP's `\DateTime` class instead of integers representing
+  UNIX timestamps.
 
 0.3.0
 -----
