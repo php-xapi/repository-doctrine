@@ -22,6 +22,7 @@ use Xabbuh\XApi\Model\IRI;
 use Xabbuh\XApi\Model\IRL;
 use Xabbuh\XApi\Model\LanguageMap;
 use Xabbuh\XApi\Model\Object as ObjectModel;
+use Xabbuh\XApi\Model\StatementObject as StatementObjectModel;
 use Xabbuh\XApi\Model\StatementId;
 use Xabbuh\XApi\Model\StatementReference;
 use Xabbuh\XApi\Model\SubStatement;
@@ -29,7 +30,7 @@ use Xabbuh\XApi\Model\SubStatement;
 /**
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-class Object
+class StatementObject
 {
     const TYPE_ACTIVITY = 'activity';
     const TYPE_AGENT = 'agent';
@@ -120,12 +121,12 @@ class Object
     public $name;
 
     /**
-     * @var Object[]|null
+     * @var StatementObject[]|null
      */
     public $members;
 
     /**
-     * @var Object|null
+     * @var StatementObject|null
      */
     public $group;
 
@@ -135,7 +136,7 @@ class Object
     public $referencedStatementId;
 
     /**
-     * @var Object|null
+     * @var StatementObject|null
      */
     public $actor;
 
@@ -145,7 +146,7 @@ class Object
     public $verb;
 
     /**
-     * @var Object|null
+     * @var StatementObject|null
      */
     public $object;
 
@@ -179,8 +180,12 @@ class Object
      */
     public $otherContext;
 
-    public static function fromModel(ObjectModel $model)
+    public static function fromModel($model)
     {
+        if (!$model instanceof ObjectModel && !$model instanceof StatementObjectModel) {
+            throw new \InvalidArgumentException(sprintf('Expected a statement object but got %s', is_object($model) ? get_class($model) : gettype($model)));
+        }
+
         if ($model instanceof ActorModel) {
             return self::fromActor($model);
         }
@@ -300,9 +305,9 @@ class Object
     {
         $object = new self();
         $object->type = self::TYPE_SUB_STATEMENT;
-        $object->actor = Object::fromModel($model->getActor());
+        $object->actor = StatementObject::fromModel($model->getActor());
         $object->verb = Verb::fromModel($model->getVerb());
-        $object->object = Object::fromModel($model->getObject());
+        $object->object = StatementObject::fromModel($model->getObject());
 
         return $object;
     }

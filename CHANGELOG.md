@@ -4,6 +4,10 @@ CHANGELOG
 0.4.0
 -----
 
+* The `XApi\Repository\Doctrine\Mapping\Object` class was renamed to
+  `XApi\Repository\Doctrine\Mapping\StatementObject` for compatibility with
+  PHP 7.2.
+
 * dropped suppport for PHP < 5.6 and HHVM
 
 * made the package compatible with `3.x` releases of `ramsey/uuid`

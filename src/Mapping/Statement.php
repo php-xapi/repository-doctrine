@@ -27,7 +27,7 @@ class Statement
     public $id;
 
     /**
-     * @var Object
+     * @var StatementObject
      */
     public $actor;
 
@@ -37,7 +37,7 @@ class Statement
     public $verb;
 
     /**
-     * @var Object
+     * @var StatementObject
      */
     public $object;
 
@@ -47,7 +47,7 @@ class Statement
     public $result;
 
     /**
-     * @var Object
+     * @var StatementObject
      */
     public $authority;
 
@@ -80,9 +80,9 @@ class Statement
     {
         $statement = new self();
         $statement->id = $model->getId()->getValue();
-        $statement->actor = Object::fromModel($model->getActor());
+        $statement->actor = StatementObject::fromModel($model->getActor());
         $statement->verb = Verb::fromModel($model->getVerb());
-        $statement->object = Object::fromModel($model->getObject());
+        $statement->object = StatementObject::fromModel($model->getObject());
 
         if (null !== $model->getCreated()) {
             $statement->created = $model->getCreated()->getTimestamp();
@@ -93,7 +93,7 @@ class Statement
         }
 
         if (null !== $authority = $model->getAuthority()) {
-            $statement->authority = Object::fromModel($authority);
+            $statement->authority = StatementObject::fromModel($authority);
         }
 
         if (null !== $context = $model->getContext()) {
