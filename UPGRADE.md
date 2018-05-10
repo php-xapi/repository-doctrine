@@ -1,6 +1,13 @@
 UPGRADE
 =======
 
+Upgrading from 0.3 to 0.4
+-------------------------
+
+* The `XApi\Repository\Doctrine\Mapping\Object` class was renamed to
+  `XApi\Repository\Doctrine\Mapping\StatementObject` for compatibility with
+  PHP 7.2.
+
 Upgrading from 0.2 to 0.3
 -------------------------
 

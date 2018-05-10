@@ -29,12 +29,12 @@ class Context
     public $registration;
 
     /**
-     * @var Object|null
+     * @var StatementObject|null
      */
     public $instructor;
 
     /**
-     * @var Object|null
+     * @var StatementObject|null
      */
     public $team;
 
@@ -44,22 +44,22 @@ class Context
     public $hasContextActivities;
 
     /**
-     * @var Object[]|null
+     * @var StatementObject[]|null
      */
     public $parentActivities;
 
     /**
-     * @var Object[]|null
+     * @var StatementObject[]|null
      */
     public $groupingActivities;
 
     /**
-     * @var Object[]|null
+     * @var StatementObject[]|null
      */
     public $categoryActivities;
 
     /**
-     * @var Object[]|null
+     * @var StatementObject[]|null
      */
     public $otherActivities;
 
@@ -97,11 +97,11 @@ class Context
         $context->language = $model->getLanguage();
 
         if (null !== $instructor = $model->getInstructor()) {
-            $context->instructor = Object::fromModel($instructor);
+            $context->instructor = StatementObject::fromModel($instructor);
         }
 
         if (null !== $team = $model->getTeam()) {
-            $context->team = Object::fromModel($team);
+            $context->team = StatementObject::fromModel($team);
         }
 
         if (null !== $contextActivities = $model->getContextActivities()) {
@@ -111,7 +111,7 @@ class Context
                 $context->parentActivities = array();
 
                 foreach ($parentActivities as $parentActivity) {
-                    $activity = Object::fromModel($parentActivity);
+                    $activity = StatementObject::fromModel($parentActivity);
                     $activity->parentContext = $context;
                     $context->parentActivities[] = $activity;
                 }
@@ -121,7 +121,7 @@ class Context
                 $context->groupingActivities = array();
 
                 foreach ($groupingActivities as $groupingActivity) {
-                    $activity = Object::fromModel($groupingActivity);
+                    $activity = StatementObject::fromModel($groupingActivity);
                     $activity->groupingContext = $context;
                     $context->groupingActivities[] = $activity;
                 }
@@ -131,7 +131,7 @@ class Context
                 $context->categoryActivities = array();
 
                 foreach ($categoryActivities as $categoryActivity) {
-                    $activity = Object::fromModel($categoryActivity);
+                    $activity = StatementObject::fromModel($categoryActivity);
                     $activity->categoryContext = $context;
                     $context->categoryActivities[] = $activity;
                 }
@@ -141,7 +141,7 @@ class Context
                 $context->otherActivities = array();
 
                 foreach ($otherActivities as $otherActivity) {
-                    $activity = Object::fromModel($otherActivity);
+                    $activity = StatementObject::fromModel($otherActivity);
                     $activity->otherContext = $context;
                     $context->otherActivities[] = $activity;
                 }
