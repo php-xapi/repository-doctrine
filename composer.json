@@ -18,7 +18,8 @@
         "ramsey/uuid": "^2.9 || ^3.0"
     },
     "require-dev": {
-        "php-xapi/test-fixtures": "^1.0"
+        "php-xapi/test-fixtures": "^1.0",
+        "symfony/phpunit-bridge": "^3.4 || ^4.0"
     },
     "minimum-stability": "dev",
     "conflict": {
