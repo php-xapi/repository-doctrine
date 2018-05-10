@@ -84,8 +84,8 @@ class Statement
         $statement->verb = Verb::fromModel($model->getVerb());
         $statement->object = Object::fromModel($model->getObject());
 
-        if (null !== $model->getTimestamp()) {
-            $statement->created = $model->getTimestamp()->getTimestamp();
+        if (null !== $model->getCreated()) {
+            $statement->created = $model->getCreated()->getTimestamp();
         }
 
         if (null !== $result = $model->getResult()) {
