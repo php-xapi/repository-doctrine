@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace XApi\Repository\Doctrine\Repository\Mapping;
+namespace XApi\Repository\Doctrine\Storage;
 
 use XApi\Repository\Doctrine\Mapping\Statement;
 
@@ -18,7 +18,7 @@ use XApi\Repository\Doctrine\Mapping\Statement;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-interface StatementRepository
+interface StatementStorage
 {
     /**
      * @param array $criteria

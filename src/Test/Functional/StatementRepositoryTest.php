@@ -13,8 +13,8 @@ namespace XApi\Repository\Doctrine\Test\Functional;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use XApi\Repository\Api\Test\Functional\StatementRepositoryTest as BaseStatementRepositoryTest;
-use XApi\Repository\Doctrine\Repository\Mapping\StatementRepository as MappedStatementRepository;
 use XApi\Repository\Doctrine\Repository\StatementRepository;
+use XApi\Repository\Doctrine\Storage\StatementStorage;
 use XApi\Repository\Doctrine\Test\StatementRepository as FreshStatementRepository;
 
 /**
@@ -28,26 +28,26 @@ abstract class StatementRepositoryTest extends BaseStatementRepositoryTest
     protected $objectManager;
 
     /**
-     * @var MappedStatementRepository
+     * @var StatementStorage
      */
-    protected $repository;
+    protected $storage;
 
     protected function setUp()
     {
         $this->objectManager = $this->createObjectManager();
-        $this->repository = $this->createRepository();
+        $this->storage = $this->createStorage();
 
         parent::setUp();
     }
 
     protected function createStatementRepository()
     {
-        return new FreshStatementRepository(new StatementRepository($this->repository), $this->objectManager);
+        return new FreshStatementRepository(new StatementRepository($this->storage), $this->objectManager);
     }
 
     protected function cleanDatabase()
     {
-        foreach ($this->repository->findStatements(array()) as $statement) {
+        foreach ($this->storage->findStatements(array()) as $statement) {
             $this->objectManager->remove($statement);
         }
 
@@ -64,7 +64,7 @@ abstract class StatementRepositoryTest extends BaseStatementRepositoryTest
      */
     abstract protected function getStatementClassName();
 
-    private function createRepository()
+    private function createStorage()
     {
         return $this->objectManager->getRepository($this->getStatementClassName());
     }

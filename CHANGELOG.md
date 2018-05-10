@@ -4,6 +4,8 @@ CHANGELOG
 0.4.0
 -----
 
+* renamed the `StatementRepository` interface to `StatementStorage` and moved
+  it to the `XApi\Repository\Doctrine\Storage` namespace
 * made the package compatible with `3.x` releases of `ramsey/uuid`
 * allow `2.x` releases of the `php-xapi/model` package too
 
