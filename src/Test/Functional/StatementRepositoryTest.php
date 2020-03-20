@@ -11,7 +11,7 @@
 
 namespace XApi\Repository\Doctrine\Test\Functional;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use XApi\Repository\Api\Test\Functional\StatementRepositoryTest as BaseStatementRepositoryTest;
 use XApi\Repository\Doctrine\Repository\Mapping\StatementRepository as MappedStatementRepository;
 use XApi\Repository\Doctrine\Repository\StatementRepository;
