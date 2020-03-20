@@ -11,7 +11,8 @@
 
 namespace XApi\Repository\Doctrine\Test;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectManager as LegacyObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Xabbuh\XApi\Model\Actor;
 use Xabbuh\XApi\Model\Statement;
 use Xabbuh\XApi\Model\StatementId;
@@ -28,8 +29,12 @@ final class StatementRepository implements StatementRepositoryInterface
     private $repository;
     private $objectManager;
 
-    public function __construct(StatementRepositoryInterface $repository, ObjectManager $objectManager)
+    public function __construct(StatementRepositoryInterface $repository, $objectManager)
     {
+        if (!$objectManager instanceof ObjectManager && !$objectManager instanceof LegacyObjectManager) {
+            throw new \TypeError(sprintf('The second argument of %s() must be an instance of %s (%s given).', __METHOD__, ObjectManager::class, is_object($objectManager) ? get_class($objectManager) : gettype($objectManager)));
+        }
+
         $this->repository = $repository;
         $this->objectManager = $objectManager;
     }
